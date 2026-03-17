@@ -2,10 +2,13 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import type { AuthResponse, ReturnData } from '~~/types/api';
 import type { User } from '~~/types/user';
+import { useToastStore } from './toast';
 
 export const useAuthStore = defineStore(
     'auth',
     () => {
+        const toast = useToastStore()
+
         const user = ref<User | null>(null)
         const token = ref<string | null>(null)
 
@@ -17,7 +20,7 @@ export const useAuthStore = defineStore(
 
         const role = computed(() => decoded.value?.role ?? null)
 
-        function checkTockenExpiration() {
+        function isTokenExpired() {
             if (!decoded.value) return true
             if (!decoded.value.exp) return true
             return decoded.value.exp * 1000 < Date.now()
@@ -29,6 +32,12 @@ export const useAuthStore = defineStore(
                     method: 'POST',
                     body: data,
                 })
+
+                toast.push({
+                    type: 'success',
+                    message: 'You are now registered',
+                })
+
                 return {
                     success: true
                 }
@@ -53,6 +62,12 @@ export const useAuthStore = defineStore(
                 }
 
                 if(err?.data?.message) {
+
+                    toast.push({
+                        type: 'error',
+                        message: err.data.message,
+                    })
+
                     return {
                         success: false,
                         errors: {
@@ -64,6 +79,11 @@ export const useAuthStore = defineStore(
                         },
                     }
                 }
+
+                toast.push({
+                    type: 'error',
+                    message: 'Something went wrong',
+                })
 
                 return {
                     success: false,
@@ -78,8 +98,15 @@ export const useAuthStore = defineStore(
                     method: 'POST',
                     body: data,
                 })
+
                 token.value = res.access_token
                 user.value = res.user
+
+                toast.push({
+                    type: 'success',
+                    message: 'You are now logged in',
+                })
+
                 return {
                     success: true,
                     data: token.value,
@@ -102,6 +129,10 @@ export const useAuthStore = defineStore(
                 }
 
                 if(err?.data?.message) {
+                    toast.push({
+                        type: 'error',
+                        message: err.data.message
+                    })
                     return {
                         success: false,
                         errors: {
@@ -111,6 +142,11 @@ export const useAuthStore = defineStore(
                         },
                     }
                 }
+
+                toast.push({
+                    type: 'error',
+                    message: 'Something went wrong'
+                })
 
                 return {
                     success: false,
@@ -131,10 +167,20 @@ export const useAuthStore = defineStore(
                 })
                 token.value = null
                 user.value = null
+
+                toast.push({
+                    type: 'success',
+                    message: 'You are now logged out',
+                })
+
                 return {
                     success: true
                 }
             } catch (err: any) {
+                toast.push({
+                    type: 'error',
+                    message: 'Something went wrong',
+                })
                 return {
                     success: false,
                     errors: null,
@@ -147,7 +193,7 @@ export const useAuthStore = defineStore(
             token,
             decoded,
             role,
-            checkTockenExpiration,
+            isTokenExpired,
             isLoggedIn,
             register,
             login,
