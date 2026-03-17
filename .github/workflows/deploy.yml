@@ -43,12 +43,11 @@ jobs:
             echo "⏳ Waiting for container..."
             sleep 5
 
-            until docker exec localmind-backend php artisan migrate:status; do
+            echo "🚀 Running migrations..."
+            until docker exec localmind-backend php artisan migrate --force; do
               echo "Waiting for DB..."
               sleep 5
             done
-
-            docker exec localmind-backend php artisan migrate --force
 
             echo "🧠 Caching config..."
             docker exec localmind-backend php artisan config:clear
