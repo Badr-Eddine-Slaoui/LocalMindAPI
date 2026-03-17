@@ -21,7 +21,16 @@ Route::controller(AuthController::class)->middleware(["is_guest:api"])->group(fu
 
 /* Questions */
 
-Route::apiResource('questions', QuestionController::class)->middleware(["authed:api"])->withoutMiddlewareFor(["index", "show"], ["authed:api"]);
+Route::apiResource('questions', QuestionController::class)
+    ->names([
+        'index' => 'api.questions.index',
+        'store' => 'api.questions.store',
+        'show' => 'api.questions.show',
+        'update' => 'api.questions.update',
+        'destroy' => 'api.questions.destroy',
+    ])
+    ->middleware(["authed:api"])
+    ->withoutMiddlewareFor(["index", "show"], ["authed:api"]);
 
 /* Favorites */
 
