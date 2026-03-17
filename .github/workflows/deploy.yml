@@ -35,7 +35,21 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/ubuntu/localmind
+
             docker compose -f docker-compose.prod.yml down
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d
+
+            echo "⏳ Waiting for container..."
+            sleep 5
+
+            echo "🚀 Running migrations..."
+            until docker exec localmind-backend php artisan migrate --force; do
+              echo "Waiting for DB..."
+              sleep 5
+            done
+
+            echo "🧠 Caching config..."
+            docker exec localmind-backend php artisan config:clear
+            docker exec localmind-backend php artisan config:cache
 
