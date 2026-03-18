@@ -167,6 +167,7 @@ export const useAuthStore = defineStore(
                 await api('/logout', {
                     method: 'POST',
                 })
+                
                 token.value = null
                 user.value = null
 

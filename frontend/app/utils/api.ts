@@ -22,9 +22,9 @@ export const useApi = () => {
 
         async onResponseError({ response }) {
             if (response.status === 401) {
-                // prevent multiple triggers
                 if (auth.token) {
-                    await auth.logout()
+                    auth.token = null
+                    auth.user = null
 
                     toast.push({
                         type: 'error',
