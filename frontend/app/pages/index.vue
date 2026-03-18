@@ -30,7 +30,7 @@
                 <NuxtLink to="/questions/create"
                     class="w-full bg-primary hover:bg-primary/90 text-background-deep rounded-xl py-4 px-6 font-bold shadow-lg shadow-primary/10 flex items-center justify-center gap-2 transition-transform active:scale-95">
                     <span class="material-symbols-outlined">edit_square</span>
-                    Swel A Wld L3abd Question
+                    Ask Question
                 </NuxtLink>
                 <div class="bg-sidebar-black p-5 rounded-xl border border-white/5">
                     <h3 class="font-bold text-white mb-4 flex items-center gap-2">
