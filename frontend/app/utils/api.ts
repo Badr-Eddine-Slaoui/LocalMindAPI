@@ -1,9 +1,11 @@
 // frontend/app/utils/api.ts
 import { useAuthStore } from '~~/stores/auth'
+import { useToastStore } from '~~/stores/toast'
 
 export const useApi = () => {
     const config = useRuntimeConfig()
     const auth = useAuthStore()
+    const toast = useToastStore()
 
     return $fetch.create({
         baseURL: config.public.apiBase,
@@ -12,11 +14,24 @@ export const useApi = () => {
             options.headers = new Headers(options.headers)
             options.headers.set('Accept', 'application/json')
             options.headers.set('Content-Type', 'application/json')
-            options.headers.set('Access-Control-Allow-Origin', '*')
 
             if (auth.token) {
                 options.headers.set('Authorization', `Bearer ${auth.token}`)
             }
         },
+
+        async onResponseError({ response }) {
+            if (response.status === 401) {
+                // prevent multiple triggers
+                if (auth.token) {
+                    await auth.logout()
+
+                    toast.push({
+                        type: 'error',
+                        message: 'Session expired, please login again',
+                    })
+                }
+            }
+        }
     })
 }

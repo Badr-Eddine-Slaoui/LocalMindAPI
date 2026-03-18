@@ -20,7 +20,7 @@ export const useAdminStore = defineStore(
     },
     {
         persist: {
-            pick: ['users_count', 'questions'],
+            pick: ['users_count'],
         },
     }
 )
