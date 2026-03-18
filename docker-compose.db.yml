@@ -1,7 +1,7 @@
 services:
-  pgadmin:
+  host_pgadmin:
     image: dpage/pgadmin4:snapshot
-    container_name: pgadmin
+    container_name: host_pgadmin
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: "${PGADMIN_EMAIL}"
