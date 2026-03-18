@@ -1,6 +1,6 @@
 services:
   app:
-    image: badreddineslaoui/localmind-backend
+    image: "badreddineslaoui/localmind-backend:${IMAGE_TAG}"
     container_name: localmind-backend
     restart: always
     env_file:
@@ -18,7 +18,7 @@ services:
     restart: always
 
   nuxt:
-    image: badreddineslaoui/localmind-frontend
+    image: "badreddineslaoui/localmind-frontend:${IMAGE_TAG}"
     container_name: localmind-frontend
     ports:
       - "3000:3000"
