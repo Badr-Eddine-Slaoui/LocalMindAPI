@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { api } from '~/utils/api';
 import type { ReturnData } from '../types/api';
 import type { Favorite, FavoriteData } from '../types/favorite';
 import { useQuestion } from './question';
@@ -9,6 +8,8 @@ import type { Question } from '~~/types/question';
 export const useFavorite = defineStore(
     'favorite',
     () => {
+        const api = useApi()
+
         const favorites = ref<Favorite[] | null>(null)
 
         async function fetchFavorites(): Promise<void> {

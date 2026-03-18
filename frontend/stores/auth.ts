@@ -7,6 +7,8 @@ import { useToastStore } from './toast';
 export const useAuthStore = defineStore(
     'auth',
     () => {
+        const api = useApi()
+        
         const toast = useToastStore()
 
         const user = ref<User | null>(null)

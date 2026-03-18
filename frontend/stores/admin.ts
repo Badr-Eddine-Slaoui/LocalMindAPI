@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { api } from '~/utils/api';
 import type { ReturnData } from '~~/types/api';
 
 export const useAdminStore = defineStore(
     'admin',
     () => {
+        const api = useApi()
         const users_count = ref(0)
 
         async function fetchAdminData() {

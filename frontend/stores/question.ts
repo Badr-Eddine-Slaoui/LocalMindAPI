@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { api } from '~/utils/api';
 import type { ReturnData } from '../types/api';
 import type { Question, QuestionData } from '../types/question';
 
 export const useQuestion = defineStore(
     'question',
     () => {
+        const api = useApi()
         const questions = ref<Question[] | null>(null)
         const question = ref<Question | null>(null)
 

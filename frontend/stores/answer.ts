@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { api } from '~/utils/api';
 import type { ReturnData } from '../types/api';
-import type { Answer, AnswerData } from '../types/answer';
+import type { Answer } from '../types/answer';
 import { useQuestion } from './question';
 import type { Question } from '~~/types/question';
 
 export const useAnswer = defineStore(
     'answer',
     () => {
+
+        const api = useApi()
 
         async function createAnswer(question_id: number, data: { answer: string; }): Promise<ReturnData<any>> {
             try{
