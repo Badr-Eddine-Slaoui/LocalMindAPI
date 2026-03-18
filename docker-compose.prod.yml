@@ -27,15 +27,3 @@ services:
       - .env.nuxt
     depends_on:
       - nginx
-
-  postgres:
-    image: postgres:17-alpine
-    container_name: postgres
-    restart: always
-    env_file:
-      - .env.docker
-    volumes:
-      - pgtables:/var/lib/postgresql/data
-
-volumes:
-  pgtables:
