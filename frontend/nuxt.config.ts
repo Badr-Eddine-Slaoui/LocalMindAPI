@@ -23,8 +23,8 @@ export default defineNuxtConfig({
       theme: {
           extend: {
               colors: {
-                  "primary": "#fbbf24", // Electric Yellow
-                  "accent-ruby": "#e11d48", // Ruby Red
+                  "primary": "#e63946", // Electric Yellow
+                  "accent-ruby": "#d4af37", // Ruby Red
                   "background-deep": "#0a0c10", // Very dark navy/grey
                   "card-dark": "#161b22", // Lighter dark shade for cards
                   "sidebar-black": "#010409", // Sleek black
